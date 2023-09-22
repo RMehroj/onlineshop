@@ -32,7 +32,9 @@ INSTALLED_APPS = [
 
     # third-party apps
     'rest_framework',
-    "rest_framework_simplejwt",
+    'rest_framework_simplejwt',
+    'phonenumber_field',
+    'django_phonenumbers',
 
     # custom apps
     'user.apps.UserConfig',
@@ -51,6 +53,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'onlineshop.urls'
+AUTH_USER_MODEL = 'user.User'
 
 TEMPLATES = [
     {
