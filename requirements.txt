@@ -1,0 +1,5 @@
+django==4.2.5
+django-environ==0.11.2
+django-dotenv==1.4.2
+environ==1.0
+python-dotenv==1.0.0
