@@ -1,5 +1,6 @@
 django==4.2.5
 djangorestframework==3.14.0
+djangorestframework-simplejwt==5.3.0
 django-environ==0.11.2
 django-dotenv==1.4.2
 environ==1.0
