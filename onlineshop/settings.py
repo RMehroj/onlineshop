@@ -17,22 +17,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = True
 
-
-from pathlib import Path
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=u9!$)20a8cq$)fuzuzpnl!@0b%&mgkxqo!=&*s6q+&h==^+ww'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
 ALLOWED_HOSTS = []
 
 
@@ -46,7 +30,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # third-party apps
     'rest_framework',
+
+    # custom apps
+    'user.apps.UserConfig',
+    'api.v1.shop.apps.ShopConfig',
 ]
 
 MIDDLEWARE = [
