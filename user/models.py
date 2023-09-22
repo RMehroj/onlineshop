@@ -21,13 +21,13 @@ class User(AbstractBaseUser, BaseModel, PermissionsMixin):
         TWITTER = "twitter", "Twitter"
         EMAIL = "email", "Email"
 
-    jwt_uuid = models.UUIDField(default=uuid_lib.uuid4, unique=True, null=True)
-    social_media_id = models.CharField(max_length=50, blank=True, null=True)
-    username = models.CharField(("name"), max_length=150, null=True)
+    jwt_uuid = models.UUIDField(default=uuid_lib.uuid4, unique=True)
+    social_media_id = models.CharField(max_length=50, blank=True)
+    username = models.CharField(("name"), max_length=150)
     full_name = models.CharField(
-        ("full name"), max_length=150, blank=True, null=True)
-    email = models.EmailField(("email address"), unique=True, null=True)
-    phone = PhoneNumberField(blank=True, null=True)
+        ("full name"), max_length=150, blank=True)
+    email = models.EmailField(("email address"), unique=True)
+    phone = PhoneNumberField(("phone number"), blank=True)
     gender = models.CharField(max_length=1,
                               choices=(('M', 'Male'), ('F', 'Female')),
                               blank=True,
