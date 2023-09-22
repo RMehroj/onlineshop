@@ -35,6 +35,7 @@ INSTALLED_APPS = [
 
     # custom apps
     'user.apps.UserConfig',
+    'core.apps.CoreConfig',
     'api.v1.shop.apps.ShopConfig',
 ]
 
