@@ -14,14 +14,42 @@ from core.models import BaseModel
 from . import managers
 
 
+class Company(BaseModel):
+    owner = models.OneToOneField(
+        "Owner", on_delete=models.SET_NULL, null=True, blank=True, related_name="+"
+    )
+    name = models.CharField(max_length=255, blank=True)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = ("Company")
+        verbose_name_plural = ("Companies")
+
+    def __str__(self):
+        return self.name or f"{self.pk}"
+
+    def save(self, *args, **kwargs):
+        self.name = self.name.replace(" ", "")
+        super().save(*args, **kwargs)
+
+
 class User(AbstractBaseUser, BaseModel, PermissionsMixin):
     class AUTH_PROVIDERS(models.TextChoices):
         GOOGLE = "google", "Google"
         FACEBOOK = "facebook", "Facebook"
         TWITTER = "twitter", "Twitter"
         EMAIL = "email", "Email"
+    
+    class ROLES(models.TextChoices):
+        OWNER = "owner", "Owner"
 
     jwt_uuid = models.UUIDField(default=uuid_lib.uuid4, unique=True)
+    # company = models.ForeignKey(
+    #     Company,
+    #     on_delete=models.CASCADE,
+    #     null=True,
+    #     blank=True,
+    # )
     social_media_id = models.CharField(max_length=50, blank=True)
     username = models.CharField(("name"), max_length=150)
     full_name = models.CharField(
@@ -58,14 +86,17 @@ class User(AbstractBaseUser, BaseModel, PermissionsMixin):
         max_length=50,
         choices=AUTH_PROVIDERS.choices,
     )
-
+    role = models.CharField(max_length=50, choices=ROLES.choices)
+    
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
     objects = managers.UserManager()
-
+        
     class Meta:
+        abstract = True
         verbose_name = ("user")
         verbose_name_plural = ("users")
+        app_label = 'user' 
 
     def __str__(self):
         return self.email
