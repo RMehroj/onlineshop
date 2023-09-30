@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'phonenumber_field',
     'django_phonenumbers',
-
+    'django_extensions',
     # custom apps
     'user.apps.UserConfig',
     'core.apps.CoreConfig',
