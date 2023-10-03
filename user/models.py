@@ -44,12 +44,12 @@ class User(AbstractBaseUser, BaseModel, PermissionsMixin):
         OWNER = "owner", "Owner"
 
     jwt_uuid = models.UUIDField(default=uuid_lib.uuid4, unique=True)
-    # company = models.ForeignKey(
-    #     Company,
-    #     on_delete=models.CASCADE,
-    #     null=True,
-    #     blank=True,
-    # )
+    company = models.ForeignKey(
+        Company,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
     social_media_id = models.CharField(max_length=50, blank=True)
     username = models.CharField(("name"), max_length=150)
     full_name = models.CharField(
@@ -93,7 +93,6 @@ class User(AbstractBaseUser, BaseModel, PermissionsMixin):
     objects = managers.UserManager()
         
     class Meta:
-        abstract = True
         verbose_name = ("user")
         verbose_name_plural = ("users")
         app_label = 'user' 
@@ -109,3 +108,10 @@ class User(AbstractBaseUser, BaseModel, PermissionsMixin):
     def tokens(self):
         refresh = RefreshToken.for_user(self)
         return {"refresh": str(refresh), "access": str(refresh.access_token)}
+
+
+class Owner(User):
+    objects = managers.AdminManager()
+
+    class Meta:
+        proxy = True
