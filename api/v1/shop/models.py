@@ -19,9 +19,10 @@ class Product(BaseModel):
     company = models.ForeignKey('user.Company', related_name='products', blank=True, null=True, on_delete=models.SET_NULL)
     website = models.URLField(unique=True)
     slug = models.SlugField(unique=True)
+    price= models.DecimalField(max_digits=10, decimal_places=2)
     categories = models.ManyToManyField(Category, related_name='products')
     class Meta:
         verbose_name_plural = 'Products'
 
     def __str__(self):
-        return self.name
+        return str(self.name) + ": $" + str(self.price)
