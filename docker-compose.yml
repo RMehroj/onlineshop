@@ -5,7 +5,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile.prod
-    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000 --timeout 60 --workers 5
+    command: gunicorn onlineshop.wsgi:application --bind 0.0.0.0:8000 --timeout 60 --workers 5
     volumes:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
@@ -19,9 +19,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER=postgres_user
-      - POSTGRES_PASSWORD=postgres_password
-      - POSTGRES_DB=postgres_database
+      - POSTGRES_USER=online_user
+      - POSTGRES_PASSWORD=online_password
+      - POSTGRES_DB=online_database
   nginx:
     image: nginx:alpine
     volumes:
