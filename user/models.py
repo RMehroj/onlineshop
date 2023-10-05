@@ -108,7 +108,22 @@ class User(AbstractBaseUser, BaseModel, PermissionsMixin):
     def tokens(self):
         refresh = RefreshToken.for_user(self)
         return {"refresh": str(refresh), "access": str(refresh.access_token)}
-
+    
+    def register(self): 
+        self.save() 
+  
+    @staticmethod
+    def get_user_by_email(email): 
+        try: 
+            return User.objects.get(email=email) 
+        except: 
+            return False
+    
+    def isExists(self): 
+        if User.objects.filter(email=self.email): 
+            return True
+  
+        return False
 
 class Owner(User):
     objects = managers.AdminManager()
