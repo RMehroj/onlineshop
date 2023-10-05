@@ -4,18 +4,18 @@ from . import views
 
 urlpatterns = [
     path(
+        'login/',
+        views.LoginView.as_view(),
+        name='login'
+    ),
+    path(
         'signup/',
         views.RegisterView.as_view(),
         name='signup'
-        ), 
-    # path(
-    #     'login/',
-    #     views.Login.as_view(),
-    #     name='login'
-    #     ), 
-    # path(
-    #     'logout/',
-    #     views.logout,
-    #     name='logout'
-    #     ),
+    ),
+    path(
+        "profile/",
+        views.UserVerifyView.as_view(),
+        name="user_verify",
+    ), 
 ]
