@@ -36,12 +36,12 @@ class UserReadSerializer(DynamicFieldsModelSerializer):
         ]
 
 
-# class LoginSerializer(TokenObtainPairSerializer):
-#     def validate(self, data):
-#         tokens = super().validate(data)
-#         data = UserReadSerializer(self.user, context=self.context).data
-#         data.update({"tokens": tokens})
-#         return data
+class LoginSerializer(TokenObtainPairSerializer):
+    def validate(self, data):
+        tokens = super().validate(data)
+        data = UserReadSerializer(self.user, context=self.context).data
+        data.update({"tokens": tokens})
+        return data
 
 
 # class GoogleSocialAuthSerializer(serializers.Serializer):
