@@ -1,0 +1,50 @@
+# pull official base image
+FROM python:3.10.3-slim-bullseye
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# create directory for the app user
+RUN mkdir -p /home/app
+
+# create the appropriate directories
+ENV HOME=/home/app
+ENV APP_HOME=/home/app/web
+RUN mkdir $APP_HOME
+RUN mkdir $APP_HOME/staticfiles
+RUN mkdir $APP_HOME/mediafiles
+WORKDIR $APP_HOME
+
+# install psycopg2 dependencies
+RUN apt-get -y update \
+    && apt-get -y upgrade \
+    && apt-get -y install --no-install-recommends postgresql postgresql-contrib netcat apt-utils libmagic1
+
+
+RUN pip install --upgrade pip
+
+# install dependencies
+COPY ./requirements.txt .
+RUN pip install -r requirements.txt
+
+# create the system app user and add to app group in one command
+RUN adduser --system --group app
+
+
+# copy entrypoint.sh
+COPY ./entrypoint.sh .
+RUN sed -i 's/\r$//g'  $APP_HOME/entrypoint.sh
+RUN chmod +x  $APP_HOME/entrypoint.sh
+
+# copy project
+COPY . $APP_HOME
+
+# chown all the files to the app user
+RUN chown -R app:app $APP_HOME
+
+# change to the app user
+USER app
+
+# run entrypoint.prod.sh
+ENTRYPOINT ["/home/app/web/entrypoint.sh"]
