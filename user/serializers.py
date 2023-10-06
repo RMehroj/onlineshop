@@ -16,6 +16,20 @@ from onlineshop.task import send_email, send_html_email
 from . import google
 from . import models
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = [
+            "pk",
+            "username",
+            "full_name",
+            "email",
+            "role",
+            "password",
+            "company",
+            "is_verified",
+        ]
+
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Company

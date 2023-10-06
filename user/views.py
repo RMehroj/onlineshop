@@ -8,6 +8,10 @@ from . import models, serializers
 from django.views import View 
 
 
+class UserListView(generics.ListAPIView):
+    queryset = models.User.objects.all()
+    serializer_class = serializers.UserSerializer
+
 class RegisterView(generics.CreateAPIView):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserWriteSerializer

@@ -122,7 +122,6 @@ class User(AbstractBaseUser, BaseModel, PermissionsMixin):
     def isExists(self): 
         if User.objects.filter(email=self.email): 
             return True
-  
         return False
 
 class Owner(User):

@@ -17,5 +17,10 @@ urlpatterns = [
         "profile/",
         views.UserVerifyView.as_view(),
         name="user_verify",
-    ), 
+    ),
+    path(
+        'users/',
+        views.UserListView.as_view(),
+        name='user-list'
+    ),
 ]
